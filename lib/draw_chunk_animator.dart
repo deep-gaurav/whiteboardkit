@@ -29,7 +29,8 @@ class DrawChunkAnimator extends DrawAnimator {
     if (drawChunk.id == 0) {
       _serializedChunks.clear();
       this.finalDraw = WhiteboardDraw.empty(
-          width: drawChunk.draw.width, height: drawChunk.draw.height).getScaled(availbleSize.width,  availbleSize.height);
+              width: drawChunk.draw.width, height: drawChunk.draw.height)
+          .getScaled(availbleSize.width, availbleSize.height);
       await pause();
     }
 
@@ -65,10 +66,9 @@ class DrawChunkAnimator extends DrawAnimator {
         queuedLine.duration = 0;
       });
 
-    if (DateTime.now().difference(drawChunk.createdAt).inSeconds > 60)
-      drawPartial.lines.forEach((line) {
-        line.duration = 0;
-      });
+    drawPartial.lines.forEach((line) {
+      line.duration = 0;
+    });
 
     addLinesToQueue(drawPartial.lines);
     await play();
