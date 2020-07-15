@@ -21,8 +21,12 @@ class DrawingController extends WhiteboardController {
   final _chunkController = StreamController<DrawChunk>.broadcast();
   DrawChunker _chunker;
   final bool enableChunk;
+  final Duration chunkSplitDuration;
 
-  DrawingController({WhiteboardDraw draw, this.enableChunk = false})
+  DrawingController(
+      {WhiteboardDraw draw,
+      this.enableChunk = false,
+      this.chunkSplitDuration = const Duration(seconds: 5)})
       : super(
             readonly: false,
             toolbox: true,
@@ -33,7 +37,7 @@ class DrawingController extends WhiteboardController {
     }
 
     //chunker
-    if (enableChunk) Timer.periodic(Duration(seconds: 5), (_) => _flushChunk());
+    if (enableChunk) Timer.periodic(chunkSplitDuration, (_) => _flushChunk());
   }
 
   @override
